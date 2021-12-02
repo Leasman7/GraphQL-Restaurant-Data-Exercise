@@ -1,6 +1,6 @@
-var { graphqlHTTP } = require("express-graphql");
-var { buildSchema, assertInputType } = require("graphql");
-var express = require("express");
+import express from 'express';
+import { graphqlHTTP } from "express-graphql";
+import { buildSchema } from "graphql";
 
 // Construct a schema, using GraphQL schema language
 var restaurants = [
@@ -92,14 +92,11 @@ type Mutation{
 // The root provides a resolver function for each API endpoint
 
 var root = {
-  restaurant: (arg) => {
-    // Your code goes here
-  },
-  restaurants: () => {
-    // Your code goes here
-  },
+  restaurant: (arg) => restaurants[arg.id],
+  restaurants: () => restaurants,
   setrestaurant: ({ input }) => {
-    // Your code goes here
+    restaurants.push({name:input.name,description:input.description});
+    return input
   },
   deleterestaurant: ({ id }) => {
     // Your code goes here
